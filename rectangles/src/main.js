@@ -2,6 +2,7 @@ const RECTANGLES = require("./input.json");
 
 // function to check if rectangles overlap
 function checkOverlap(rect1, rect2) {
+  if (!rect1 || !rect2) return false;
   // check if rectangles overlap
   if (
     rect1.x + rect1.width > rect2.x && // rect1 right edge past rect2 left
