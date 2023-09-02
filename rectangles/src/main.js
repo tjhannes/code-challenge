@@ -1,7 +1,7 @@
-import RECTANGLES from "./input.json" assert { type: "json" };
+const RECTANGLES = require("./input.json");
 
 // function to check if rectangles overlap
-export function checkOverlap(rect1, rect2) {
+function checkOverlap(rect1, rect2) {
   // check if rectangles overlap
   if (
     rect1.x + rect1.width > rect2.x && // rect1 right edge past rect2 left
@@ -16,3 +16,7 @@ export function checkOverlap(rect1, rect2) {
 }
 
 console.log(checkOverlap(RECTANGLES[0], RECTANGLES[1]));
+
+module.exports = {
+  checkOverlap,
+};
