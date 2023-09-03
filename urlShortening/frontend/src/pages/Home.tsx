@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Modal from "../components/Modal.tsx";
+import NavBar from "../components/NavBar.tsx";
 
 interface Response {
   shortUrl: string;
@@ -9,7 +11,8 @@ function Home() {
   const [activeSegment, setActiveSegment] = useState("encode");
   const [listOfUrls, setListOfUrls] = useState([]);
   const [response, setResponse] = useState<Response>();
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [messageType, setMessageType] = useState<string>("");
 
   const handleMenuButton = (type: string) => {
     setResponse(undefined);
@@ -39,9 +42,10 @@ function Home() {
       .then((data) => {
         navigator.clipboard.writeText(data.shortUrl);
         setResponse(data);
-        setShowSuccessModal(true);
+        setMessageType("success");
+        setShowMessageModal(true);
         setTimeout(() => {
-          setShowSuccessModal(false);
+          setShowMessageModal(false);
         }, 2000);
       });
   };
@@ -58,46 +62,25 @@ function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setResponse(data);
+        if (!data) {
+          setMessageType("notFound");
+          setShowMessageModal(true);
+          setTimeout(() => {
+            setShowMessageModal(false);
+          }, 2000);
+        }
       });
   };
 
   return (
     <div className="App">
       <h2>URL Shortening Service</h2>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className={
-            activeSegment === "encode" ? "activeButton" : "inactiveButton"
-          }
-          onClick={() => handleMenuButton("encode")}
-        >
-          Shorten
-        </div>
-        <div
-          className={
-            activeSegment === "decode" ? "activeButton" : "inactiveButton"
-          }
-          onClick={() => handleMenuButton("decode")}
-        >
-          Look up
-        </div>
-        <div
-          className={
-            activeSegment === "list" ? "activeButton" : "inactiveButton"
-          }
-          onClick={() => handleMenuButton("list")}
-        >
-          List all
-        </div>
-      </div>
+
+      <NavBar
+        activeSegment={activeSegment}
+        handleMenuButton={handleMenuButton}
+      />
 
       {activeSegment === "encode" && (
         <div>
@@ -173,22 +156,7 @@ function Home() {
         </div>
       )}
 
-      {showSuccessModal && (
-        <div
-          style={{
-            backgroundColor: "#5fba7d",
-            position: "absolute",
-            bottom: "100px",
-            left: "40%",
-            right: "40%",
-            zIndex: 10,
-            padding: "10px",
-            borderRadius: "5px",
-          }}
-        >
-          <p>URL copied to clipboard!</p>
-        </div>
-      )}
+      {showMessageModal && <Modal messageType={messageType} />}
     </div>
   );
 }
