@@ -42,6 +42,7 @@
   color: #ffffff;
   margin: 5px;
   padding: 5px;
+  border-radius: 5px;
 }
 
 .inactiveButton {
@@ -49,4 +50,5 @@
   color: #282c34;
   margin: 5px;
   padding: 5px;
+  border-radius: 5px;
 }

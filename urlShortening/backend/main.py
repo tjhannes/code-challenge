@@ -45,7 +45,7 @@ def encode_item(item: Url):
 def decode_item(item: Shorturl):
     for i in localDb:
         if i["shortUrl"] == item.shorturl:
-            return {i["url"]}
+            return {"url": i["url"], "shortUrl": i["shortUrl"]}
     
 @app.get("/list")
 def list_items():
