@@ -99,12 +99,27 @@ const testJson7 = [
   },
 ];
 
+const testJson8 = [
+  {
+    x: 100,
+    y: 100,
+    width: 100000,
+    height: 100000,
+  },
+  {
+    x: 200,
+    y: 200,
+    width: 1,
+    height: 1,
+  },
+];
+
 test("rectangles overlap", () => {
   expect(checkOverlap(testJson1[0], testJson1[1])).toBe(true);
 });
 
-test("rectangles dont overlap", () => {
-  expect(checkOverlap(testJson2[0], testJson2[1])).toBe(false);
+test("rectangles overlap (on each other)", () => {
+  expect(checkOverlap(testJson2[0], testJson2[1])).toBe(true);
 });
 
 test("rectangles dont overlap", () => {
@@ -115,14 +130,20 @@ test("rectangles dont overlap", () => {
   expect(checkOverlap(testJson4[0], testJson4[1])).toBe(false);
 });
 
-test("rectangles inside each other", () => {
+test("rectangles dont overlap", () => {
   expect(checkOverlap(testJson5[0], testJson5[1])).toBe(false);
 });
 
-test("rectangles of size 0", () => {
-  expect(checkOverlap(testJson6[0], testJson6[1])).toBe(false);
+test("rectangles of size 0 (on each other)", () => {
+  expect(checkOverlap(testJson6[0], testJson6[1])).toBe(true);
 });
 
 test("only one rectangle given", () => {
-  expect(checkOverlap(testJson7[0], testJson7[1])).toBe(false);
+  expect(() => checkOverlap(testJson7[0], testJson7[1])).toThrow(
+    Error("Missing rectangle(s)")
+  );
+});
+
+test("rectangles inside each other", () => {
+  expect(checkOverlap(testJson8[0], testJson8[1])).toBe(true);
 });
