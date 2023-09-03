@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.activeButton {
+  background-color: #0c02ff;
+  color: #ffffff;
+  margin: 5px;
+  padding: 5px;
+}
+
+.inactiveButton {
+  background-color: #d6d6d6;
+  color: #282c34;
+  margin: 5px;
+  padding: 5px;
+}
