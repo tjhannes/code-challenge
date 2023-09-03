@@ -25,9 +25,9 @@ function Home() {
     setActiveSegment(type);
   };
 
-  const handleShorten = (e) => {
+  const handleShorten = (e: any) => {
     e.preventDefault();
-    const url = e.target.url.value;
+    const url = e?.target?.url?.value;
     fetch("http://127.0.0.1:8000/encode/", {
       method: "POST",
       headers: {
@@ -46,9 +46,9 @@ function Home() {
       });
   };
 
-  const handleLookup = (e) => {
+  const handleLookup = (e: any) => {
     e.preventDefault();
-    const shorturl = e.target.shorturl.value;
+    const shorturl = e?.target?.shorturl?.value;
     fetch("http://127.0.0.1:8000/decode/", {
       method: "POST",
       headers: {
@@ -107,11 +107,14 @@ function Home() {
               type="text"
               placeholder="Enter a URL to shorten"
               name="url"
+              data-testid="input1"
             />
-            <button type="submit">Shorten</button>
+            <button type="submit" data-testid="button1">
+              Shorten
+            </button>
           </form>
           {response && (
-            <div style={{ marginTop: "10px" }}>
+            <div style={{ marginTop: "10px" }} data-testid="resultDiv">
               Shortened URL: {response.shortUrl}
             </div>
           )}
