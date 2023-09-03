@@ -2,18 +2,17 @@ const RECTANGLES = require("./input.json");
 
 // function to check if rectangles overlap
 function checkOverlap(rect1, rect2) {
-  if (!rect1 || !rect2) return false;
-  // check if rectangles overlap
-  if (
-    rect1.x + rect1.width > rect2.x && // rect1 right edge past rect2 left
-    rect1.x < rect2.x + rect2.width && // rect1 left edge past rect2 right
-    rect1.y + rect1.height > rect2.y && // rect1 top edge past rect2 bottom
-    rect1.y < rect2.y + rect2.height
-  ) {
-    // rect1 bottom edge past rect2 top
-    return true;
+  if (!rect1 || !rect2) throw new Error("Missing rectangle(s)");
+  // The first rectangle is under the second or vice versa
+  if (rect1.y + rect1.height < rect2.y || rect2.y + rect2.height < rect1.y) {
+    return false;
   }
-  return false;
+  // The first rectangle is to the left of the second or vice versa
+  if (rect1.x + rect1.width < rect2.x || rect2.x + rect2.width < rect1.x) {
+    return false;
+  }
+  // Rectangles overlap
+  return true;
 }
 
 console.log(checkOverlap(RECTANGLES[0], RECTANGLES[1]));
